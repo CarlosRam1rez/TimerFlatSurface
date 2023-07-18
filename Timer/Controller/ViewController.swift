@@ -52,9 +52,10 @@ class TimerController: UIViewController {
     
     @objc func startTimer() {
         resetCounters()
-        self.messageLbl.isHidden = false
-        self.startButton.isHidden = true
-        self.stopButton.isHidden = false
+        messageLbl.isHidden = false
+        startButton.isHidden = true
+        stopButton.isHidden = false
+        messageLbl.text = TimerModel().waitMessage
         timerRotation = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
             
             let motion: CMAttitude = self.deviceMotionData.attitude
