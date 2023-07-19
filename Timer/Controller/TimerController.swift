@@ -57,6 +57,7 @@ class TimerController: UIViewController {
             timer.invalidate()
             stopButton.setAttributedTitle(TimerModel().continueTimer, for: .normal)
             stopButton.tag = TimerModel().statusContinueButton
+            timerUserInteraction(isEnable: false)
         case TimerModel().statusContinueButton:
             stopButton.setAttributedTitle(TimerModel().pauseTimer, for: .normal)
             stopButton.tag = TimerModel().statusPauseButton
@@ -75,6 +76,7 @@ class TimerController: UIViewController {
         case TimerModel().statusCancelButton:
             resetCounters()
         default:
+            timerUserInteraction(isEnable: false)
             messageLbl.isHidden = false
             startButton.isHidden = true
             startButton.tag = TimerModel().statusCancelButton
@@ -121,6 +123,7 @@ class TimerController: UIViewController {
         stopButton.isHidden = true
         stopButton.tag = TimerModel().statusPauseButton
         startButton.tag = TimerModel().statusPauseButton
+        timerUserInteraction(isEnable: true)
     }
     
     private func startCounters() {
@@ -138,21 +141,15 @@ class TimerController: UIViewController {
         timer = Timer.scheduledTimer(withTimeInterval: 0.00000005, repeats: true) { _ in
             self.counterSec -= 1
             if self.counterSec >= 0 {
-                self.hoursTxtField.text = "\(String(format: "%02d", self.counterHour))"
-                self.minutesTxtField.text = "\(String(format: "%02d", self.counterMin))"
-                self.secondsTxtField.text = "\(String(format: "%02d", self.counterSec))"
+                self.setCounterValue()
             } else if self.counterMin > 0 {
                 self.counterMin -= 1
                 self.counterSec = 59
-                self.hoursTxtField.text = "\(String(format: "%02d", self.counterHour))"
-                self.minutesTxtField.text = "\(String(format: "%02d", self.counterMin))"
-                self.secondsTxtField.text = "\(String(format: "%02d", self.counterSec))"
+                self.setCounterValue()
             } else if self.counterHour > 0 {
                 self.counterHour -= 1
                 self.counterMin = 59
-                self.hoursTxtField.text = "\(String(format: "%02d", self.counterHour))"
-                self.minutesTxtField.text = "\(String(format: "%02d", self.counterMin))"
-                self.secondsTxtField.text = "\(String(format: "%02d", self.counterSec))"
+                self.self.setCounterValue()
             }
             
             if self.counterMin == 0 && self.counterSec == 0 && self.counterHour == 0 {
@@ -202,6 +199,18 @@ extension TimerController {
     
     @objc func dismissPickerView() {
         self.view.endEditing(true)
+    }
+    
+    private func timerUserInteraction(isEnable : Bool) {
+        hoursTxtField.isUserInteractionEnabled = isEnable
+        minutesTxtField.isUserInteractionEnabled = isEnable
+        secondsTxtField.isUserInteractionEnabled = isEnable
+    }
+    
+    private func setCounterValue() {
+        self.hoursTxtField.text = "\(String(format: "%02d", self.counterHour))"
+        self.minutesTxtField.text = "\(String(format: "%02d", self.counterMin))"
+        self.secondsTxtField.text = "\(String(format: "%02d", self.counterSec))"
     }
 }
 
