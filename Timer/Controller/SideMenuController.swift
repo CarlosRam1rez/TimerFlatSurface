@@ -40,11 +40,10 @@ extension SideMenuController {
     
     @objc func showCommentView() {
         delegate?.pushToCommentView()
-        dismiss(animated: true)
     }
     
     @objc func showConfigureView() {
-        delegate?.pushToConfigureView()
         dismiss(animated: true)
+        delegate?.pushToConfigureView()
     }
 }

@@ -11,18 +11,21 @@ import SideMenu
 
 class TimerController: UIViewController {
     
-    @IBOutlet weak var timerLbl: UILabel!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var messageLbl: UILabel!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var sideMenuButton: UIButton!
+    
+    @IBOutlet weak var hoursTxtField: UITextField!
+    @IBOutlet weak var minutesTxtField: UITextField!
+    @IBOutlet weak var secondsTxtField: UITextField!
     
     var timer = Timer()
     var timerRotation = Timer()
     
     var counterSec: Int = 0
     var counterMin: Int = 0
-    var counterHour: Int = 1
+    var counterHour: Int = 0
     var rotationRate: Double = 0.0
     
     var manager = CMMotionManager()
@@ -30,13 +33,17 @@ class TimerController: UIViewController {
     
     var menu: SideMenuNavigationController?
     
+    var pickerView = UIPickerView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setupButtons()
         setupMotionUpdates()
+        setupPickerView()
         menu?.leftSide = false
         SideMenuManager.default.rightMenuNavigationController = menu
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     @objc func stopTimer() {
@@ -103,8 +110,10 @@ class TimerController: UIViewController {
     private func resetCounters() {
         counterMin = 0
         counterSec = 0
-        counterHour = 1
-        timerLbl.text = "\(String(format: "%02d : %02d : %02d", counterHour, counterMin, counterSec))"
+        counterHour = 0
+        hoursTxtField.text = "\(String(format: "%02d", counterHour))"
+        minutesTxtField.text = "\(String(format: "%02d", counterMin))"
+        secondsTxtField.text = "\(String(format: "%02d", counterSec))"
         startButton.setAttributedTitle(TimerModel().startTimer, for: .normal)
         startButton.backgroundColor = .systemOrange
         timerRotation.invalidate()
@@ -129,15 +138,21 @@ class TimerController: UIViewController {
         timer = Timer.scheduledTimer(withTimeInterval: 0.00000005, repeats: true) { _ in
             self.counterSec -= 1
             if self.counterSec >= 0 {
-                self.timerLbl.text = "\(String(format: "%02d : %02d : %02d", self.counterHour, self.counterMin, self.counterSec))"
+                self.hoursTxtField.text = "\(String(format: "%02d", self.counterHour))"
+                self.minutesTxtField.text = "\(String(format: "%02d", self.counterMin))"
+                self.secondsTxtField.text = "\(String(format: "%02d", self.counterSec))"
             } else if self.counterMin > 0 {
                 self.counterMin -= 1
                 self.counterSec = 59
-                self.timerLbl.text = "\(String(format: "%02d : %02d : %02d", self.counterHour, self.counterMin, self.counterSec))"
+                self.hoursTxtField.text = "\(String(format: "%02d", self.counterHour))"
+                self.minutesTxtField.text = "\(String(format: "%02d", self.counterMin))"
+                self.secondsTxtField.text = "\(String(format: "%02d", self.counterSec))"
             } else if self.counterHour > 0 {
                 self.counterHour -= 1
                 self.counterMin = 59
-                self.timerLbl.text = "\(String(format: "%02d : %02d : %02d", self.counterHour, self.counterMin, self.counterSec))"
+                self.hoursTxtField.text = "\(String(format: "%02d", self.counterHour))"
+                self.minutesTxtField.text = "\(String(format: "%02d", self.counterMin))"
+                self.secondsTxtField.text = "\(String(format: "%02d", self.counterSec))"
             }
             
             if self.counterMin == 0 && self.counterSec == 0 && self.counterHour == 0 {
@@ -149,7 +164,7 @@ class TimerController: UIViewController {
     }
     
 }
-
+// MARK: - SetupUI
 extension TimerController {
     private func setupButtons() {
         startButton.addTarget(self, action: #selector(startTimer), for: .touchUpInside)
@@ -167,10 +182,30 @@ extension TimerController {
             self.deviceMotionData = data
             self.manager.deviceMotionUpdateInterval = 0.5
         }
-        timerLbl.text = "\(String(format: "%02d : %02d : %02d", self.counterHour, self.counterMin, self.counterSec))"
+        hoursTxtField.text = "\(String(format: "%02d", counterHour))"
+        minutesTxtField.text = "\(String(format: "%02d", counterMin))"
+        secondsTxtField.text = "\(String(format: "%02d", counterSec))"
+    }
+    
+    private func setupPickerView() {
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        hoursTxtField.inputView = pickerView
+        minutesTxtField.inputView = pickerView
+        secondsTxtField.inputView = pickerView
+        hoursTxtField.tintColor = .clear
+        minutesTxtField.tintColor = .clear
+        secondsTxtField.tintColor = .clear
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissPickerView))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissPickerView() {
+        self.view.endEditing(true)
     }
 }
 
+// MARK: - SideMenu
 extension TimerController: SideMenuProtocol {
     func pushToCommentView() {
         print("pushToCommentView")
@@ -178,6 +213,8 @@ extension TimerController: SideMenuProtocol {
     
     func pushToConfigureView() {
         print("pushToConfigureView")
+        guard let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ConfigureController") as? ConfigureController else { return }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -186,5 +223,58 @@ extension TimerController: SideMenuProtocol {
             let vc = navViewController.viewControllers.first as! SideMenuController
             vc.delegate = self
         }
+    }
+}
+
+// MARK: - PickerView
+
+extension TimerController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 3
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        switch component {
+        case 0:
+            return TimerModel().hours.count
+        case 1:
+            return TimerModel().minutes.count
+        case 2:
+            return TimerModel().seconds.count
+        default:
+            return 0
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        switch component {
+        case 0:
+            return String(TimerModel().hours[row])
+        case 1:
+            return String(TimerModel().minutes[row])
+        case 2:
+            return String(TimerModel().seconds[row])
+        default:
+            return String()
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch component {
+        case 0:
+            counterHour = TimerModel().hours[row]
+            hoursTxtField.text = String(format: "%02d", TimerModel().hours[row])
+        case 1:
+            counterMin = TimerModel().minutes[row]
+            minutesTxtField.text = String(format: "%02d",TimerModel().minutes[row])
+        case 2:
+            counterSec = TimerModel().seconds[row]
+            secondsTxtField.text = String(format: "%02d",TimerModel().seconds[row])
+        default:
+            break
+        }
+        
     }
 }
