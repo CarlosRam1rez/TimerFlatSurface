@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreMotion
+import SideMenu
 
 class TimerController: UIViewController {
     
@@ -14,6 +15,7 @@ class TimerController: UIViewController {
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var messageLbl: UILabel!
     @IBOutlet weak var stopButton: UIButton!
+    @IBOutlet weak var sideMenuButton: UIButton!
     
     var timer = Timer()
     var timerRotation = Timer()
@@ -26,21 +28,17 @@ class TimerController: UIViewController {
     var manager = CMMotionManager()
     var deviceMotionData = CMDeviceMotion()
     
+    var menu: SideMenuNavigationController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setupButtons()
-        manager.startDeviceMotionUpdates(to: OperationQueue()) { (data: CMDeviceMotion?, error: Error?) in
-            guard let data = data else {
-                print("Error: \(error!)")
-                return
-            }
-            self.deviceMotionData = data
-            self.manager.deviceMotionUpdateInterval = 0.5
-        }
-        timerLbl.text = "\(String(format: "%02d : %02d : %02d", self.counterHour, self.counterMin, self.counterSec))"
+        setupMotionUpdates()
+        menu?.leftSide = false
+        SideMenuManager.default.rightMenuNavigationController = menu
     }
-
+    
     @objc func stopTimer() {
         
         startButton.isHidden = false
@@ -146,15 +144,47 @@ class TimerController: UIViewController {
                 //HERE sound and vibrate behaivor
                 print("FINISHED!!!")
             }
-          }
+        }
         
     }
     
+}
+
+extension TimerController {
     private func setupButtons() {
         startButton.addTarget(self, action: #selector(startTimer), for: .touchUpInside)
         stopButton.addTarget(self, action: #selector(stopTimer), for: .touchUpInside)
         startButton.layer.cornerRadius = 20
         stopButton.layer.cornerRadius = 20
     }
+    
+    private func setupMotionUpdates() {
+        manager.startDeviceMotionUpdates(to: OperationQueue()) { (data: CMDeviceMotion?, error: Error?) in
+            guard let data = data else {
+                print("Error: \(error!)")
+                return
+            }
+            self.deviceMotionData = data
+            self.manager.deviceMotionUpdateInterval = 0.5
+        }
+        timerLbl.text = "\(String(format: "%02d : %02d : %02d", self.counterHour, self.counterMin, self.counterSec))"
+    }
 }
 
+extension TimerController: SideMenuProtocol {
+    func pushToCommentView() {
+        print("pushToCommentView")
+    }
+    
+    func pushToConfigureView() {
+        print("pushToConfigureView")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showSideMenu" {
+            let navViewController = segue.destination as! SideMenuNavigationController
+            let vc = navViewController.viewControllers.first as! SideMenuController
+            vc.delegate = self
+        }
+    }
+}
