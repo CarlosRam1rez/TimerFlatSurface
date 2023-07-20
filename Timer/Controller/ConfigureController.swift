@@ -6,7 +6,10 @@
 //
 
 import UIKit
-import AVFoundation
+
+protocol ConfigureControllerDelegate: Any {
+    func setupConfiguration(sound: Int?, vibrate: Int?)
+}
 
 class ConfigureController: UIViewController {
     
@@ -18,21 +21,27 @@ class ConfigureController: UIViewController {
     @IBOutlet weak var chooseVibrateButton: UIButton!
     @IBOutlet weak var chooseSoundButton: UIButton!
     
+    var delegate: ConfigureControllerDelegate?
+    
+    var vibrateLevel: Int?
+    var soundType: Int?
+    
     lazy var setSound1 = { (action: UIAction) in
-        self.setSound(sound: 0)
+        self.soundType = 0
     }
     
     lazy var setSound2 = { (action: UIAction) in
-        self.setSound(sound: 1)
+        self.soundType = 1
     }
     
     lazy var setVibrate1 = { (action: UIAction) in
-        self.setVibrate(level: 0)
+        self.vibrateLevel = 0
     }
     
     lazy var setVibrate2 = { (action: UIAction) in
-        self.setVibrate(level: 1)
+        self.vibrateLevel = 1
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -40,6 +49,7 @@ class ConfigureController: UIViewController {
     }
     
     @IBAction func back(_ sender: Any) {
+        delegate?.setupConfiguration(sound: soundType, vibrate: vibrateLevel)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -92,6 +102,7 @@ class ConfigureController: UIViewController {
                 allFunctionsCheckBoxButton.isEnabled = false
                 chooseVibrateButton.isEnabled = true
                 chooseSoundButton.isEnabled = false
+                soundType = nil
             } else {
                 onlyVibrateButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                 onlySoundButton.isEnabled = true
@@ -107,6 +118,7 @@ class ConfigureController: UIViewController {
                 allFunctionsCheckBoxButton.isEnabled = false
                 chooseVibrateButton.isEnabled = false
                 chooseSoundButton.isEnabled = true
+                vibrateLevel = nil
             } else {
                 onlySoundButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                 onlyVibrateButton.isEnabled = true
@@ -117,44 +129,5 @@ class ConfigureController: UIViewController {
         default:
             break
         }
-    }
-    
-    
-    func setSound(sound: Int) {
-        print("sound: ", sound)
-    }
-    
-    func setVibrate(level: Int) {
-        print("vibrate: ", level)
-        switch level {
-        case 0:
-            var timerCount = 0
-             Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {  timer in
-                UIDevice.vibrate()
-                 timerCount += 1
-                 
-                 if timerCount == 5 {
-                     timer.invalidate()
-                 }
-            }
-        case 1:
-            var timerCount = 0
-            Timer.scheduledTimer(withTimeInterval: 0.15, repeats: true) {  timer in
-                UIDevice.vibrate()
-                 timerCount += 1
-                 
-                 if timerCount == 40 {
-                     timer.invalidate()
-                 }
-            }
-        default:
-            break
-        }
-    }
-}
-
-extension UIDevice {
-    static func vibrate() {
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
     }
 }

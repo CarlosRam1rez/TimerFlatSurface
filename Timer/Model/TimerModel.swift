@@ -40,6 +40,9 @@ struct TimerModel {
     let vibrate2 = "Vibración 2"
     let chooseSoundButton = "Selecciona un Sonido"
     let chooseVibrateButton = "Selecciona una Vibración"
+    let alertTitle = "Error"
+    let alertMessage = "Por favor agrega un valor en el temporizador."
+    let alertOk = "Ok"
 }
 
 

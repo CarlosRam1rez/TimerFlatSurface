@@ -8,6 +8,7 @@
 import UIKit
 import CoreMotion
 import SideMenu
+import AVFoundation
 
 class TimerController: UIViewController {
     
@@ -34,6 +35,9 @@ class TimerController: UIViewController {
     var menu: SideMenuNavigationController?
     
     var pickerView = UIPickerView()
+    
+    var soundOption: Int?
+    var vibrateLevel: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +76,12 @@ class TimerController: UIViewController {
     }
     
     @objc func startTimer() {
+        if counterHour == 0 && counterMin == 0 && counterSec == 0 {
+            let alert = UIAlertController(title: TimerModel().alertTitle, message: TimerModel().alertMessage, preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: TimerModel().alertOk, style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
         switch startButton.tag {
         case TimerModel().statusCancelButton:
             resetCounters()
@@ -134,10 +144,6 @@ class TimerController: UIViewController {
         stopButton.setAttributedTitle(TimerModel().pauseTimer, for: .normal)
         stopButton.backgroundColor = .systemOrange
         stopButton.tag = TimerModel().statusPauseButton
-        if counterMin == 0 && counterSec == 0 {
-            self.counterSec = 59
-            self.counterMin = 59
-        }
         timer = Timer.scheduledTimer(withTimeInterval: 0.00000005, repeats: true) { _ in
             self.counterSec -= 1
             if self.counterSec >= 0 {
@@ -155,6 +161,8 @@ class TimerController: UIViewController {
             if self.counterMin == 0 && self.counterSec == 0 && self.counterHour == 0 {
                 //HERE sound and vibrate behaivor
                 print("FINISHED!!!")
+                self.soundAndVibrate()
+                self.resetCounters()
             }
         }
         
@@ -223,6 +231,7 @@ extension TimerController: SideMenuProtocol {
     func pushToConfigureView() {
         print("pushToConfigureView")
         guard let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ConfigureController") as? ConfigureController else { return }
+        vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -285,5 +294,84 @@ extension TimerController: UIPickerViewDelegate, UIPickerViewDataSource {
             break
         }
         
+    }
+}
+
+// MARK: - ConfigureController
+extension TimerController: ConfigureControllerDelegate {
+    func setupConfiguration(sound: Int?, vibrate: Int?) {
+        self.soundOption = sound
+        self.vibrateLevel = vibrate
+        
+    }
+    
+    func vibrateDevice(level: Int) {
+        switch level {
+        case 0:
+            var timerCount = 0
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {  timer in
+                UIDevice.vibrate()
+                timerCount += 1
+                
+                if timerCount == 5 {
+                    timer.invalidate()
+                }
+            }
+        case 1:
+            var timerCount = 0
+            Timer.scheduledTimer(withTimeInterval: 0.15, repeats: true) {  timer in
+                UIDevice.vibrate()
+                timerCount += 1
+                
+                if timerCount == 40 {
+                    timer.invalidate()
+                }
+            }
+        default:
+            break
+        }
+    }
+    
+    func playSound(type: Int) {
+
+        let systemSoundID: SystemSoundID = type == 1 ? 1023 : 1033 // 1016tweet 1033 telegram
+        var timerCount = 0
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            AudioServicesPlaySystemSound(systemSoundID)
+            timerCount += 1
+            if timerCount == 5 {
+                timer.invalidate()
+            }
+        }
+    }
+}
+
+// MARK: - Sound and Vibrate handler
+extension TimerController {
+    private func soundAndVibrate() {
+        if vibrateLevel == nil && soundOption == nil { return }
+        
+        if vibrateLevel == nil && soundOption != nil {
+            if let sound = soundOption {
+                playSound(type: sound)
+            }
+        } else if vibrateLevel != nil && soundOption == nil {
+            if let level = vibrateLevel {
+                vibrateDevice(level: level)
+            }
+        } else {
+            guard let vibrateLevel = vibrateLevel else { return }
+            guard let soundOption = soundOption else { return }
+            DispatchQueue.main.async {
+                self.vibrateDevice(level: vibrateLevel)
+                self.playSound(type: soundOption)
+            }
+        }
+    }
+}
+
+extension UIDevice {
+    static func vibrate() {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
     }
 }
