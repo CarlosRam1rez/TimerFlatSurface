@@ -100,6 +100,7 @@ class TimerController: UIViewController {
     }
     
     private func checkRotationUpdate() {
+        sideMenuButton.isEnabled = false
         timerRotation = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             
             let motion: CMAttitude = self.deviceMotionData.attitude
@@ -134,6 +135,7 @@ class TimerController: UIViewController {
         stopButton.tag = TimerModel().statusPauseButton
         startButton.tag = TimerModel().statusPauseButton
         timerUserInteraction(isEnable: true)
+        sideMenuButton.isEnabled = true
     }
     
     private func startCounters() {
