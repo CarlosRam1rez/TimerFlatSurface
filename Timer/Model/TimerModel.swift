@@ -43,6 +43,7 @@ struct TimerModel {
     let alertTitle = "Error"
     let alertMessage = "Por favor agrega un valor en el temporizador."
     let alertOk = "Ok"
+    let message = "Carlos Ramírez \n\nEn esta prueba obtuve mucho aprendizaje principalmente la interacción con el device ya que no lo había trabajado. Me gusto mucho realizar la prueba ya que tuve oportunidad de demostrar mis conocimientos y aprender cosas nuevas que me quedan como experiencia para mis próximos proyectos. \nEspero cumplir con sus espectativas, muchas gracias por la oportunidad."
 }
 
 

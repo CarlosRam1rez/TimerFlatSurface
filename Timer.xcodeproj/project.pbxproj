@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0703D8822A69AD3800572C27 /* CommentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0703D8812A69AD3800572C27 /* CommentsController.swift */; };
 		072BB94C2A671B360020E743 /* TimerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 072BB94B2A671B360020E743 /* TimerModel.swift */; };
 		072BB9502A674C8D0020E743 /* SideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 072BB94F2A674C8D0020E743 /* SideMenuController.swift */; };
 		072BB9522A6771CC0020E743 /* ConfigureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 072BB9512A6771CC0020E743 /* ConfigureController.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0703D8812A69AD3800572C27 /* CommentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsController.swift; sourceTree = "<group>"; };
 		072BB94B2A671B360020E743 /* TimerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerModel.swift; sourceTree = "<group>"; };
 		072BB94F2A674C8D0020E743 /* SideMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuController.swift; sourceTree = "<group>"; };
 		072BB9512A6771CC0020E743 /* ConfigureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureController.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				07AACF002A5F6CE7006F9F32 /* TimerController.swift */,
 				072BB94F2A674C8D0020E743 /* SideMenuController.swift */,
 				072BB9512A6771CC0020E743 /* ConfigureController.swift */,
+				0703D8812A69AD3800572C27 /* CommentsController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 			files = (
 				072BB9522A6771CC0020E743 /* ConfigureController.swift in Sources */,
 				072BB9502A674C8D0020E743 /* SideMenuController.swift in Sources */,
+				0703D8822A69AD3800572C27 /* CommentsController.swift in Sources */,
 				07AACF012A5F6CE7006F9F32 /* TimerController.swift in Sources */,
 				072BB94C2A671B360020E743 /* TimerModel.swift in Sources */,
 				07AACEFD2A5F6CE7006F9F32 /* AppDelegate.swift in Sources */,
