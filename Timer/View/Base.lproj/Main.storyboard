@@ -3,8 +3,10 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -241,19 +243,99 @@
                                     <action selector="back:" destination="L7j-Vu-96C" eventType="touchUpInside" id="DZI-yp-Pzy"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="39" translatesAutoresizingMaskIntoConstraints="NO" id="vvn-gA-i1n">
+                                <rect key="frame" x="20" y="139" width="353" height="181"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hp3-ZH-rqw">
+                                        <rect key="frame" x="0.0" y="0.0" width="353" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" imagePlacement="leading" title="Button" imagePadding="10">
+                                            <imageReference key="image" image="checkmark.square" catalog="system" variableValue="1"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="checkBoxHandler:" destination="L7j-Vu-96C" eventType="touchUpInside" id="bZr-9O-nno"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Xg-Iy-3cB">
+                                        <rect key="frame" x="0.0" y="73.333333333333343" width="353" height="34.333333333333343"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" imagePlacement="leading" title="Button" imagePadding="10">
+                                            <imageReference key="image" image="checkmark.square" catalog="system" variableValue="1"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="checkBoxHandler:" destination="L7j-Vu-96C" eventType="touchUpInside" id="tQq-0Q-SLa"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uRJ-65-SRV">
+                                        <rect key="frame" x="0.0" y="146.66666666666669" width="353" height="34.333333333333343"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" imagePlacement="leading" title="Button" imagePadding="10">
+                                            <imageReference key="image" image="checkmark.square" catalog="system" variableValue="1"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="checkBoxHandler:" destination="L7j-Vu-96C" eventType="touchUpInside" id="Xkc-zf-LjS"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kjW-gn-AVz">
+                                <rect key="frame" x="20" y="370" width="353" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="6hM-0A-B77"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <menu key="menu" id="3A3-wH-Xzr">
+                                    <children>
+                                        <command title="Item 1" id="feC-Nt-w4t"/>
+                                        <command title="Item 2" id="ak3-kX-WQL"/>
+                                    </children>
+                                </menu>
+                                <state key="normal" title="Button"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vfI-Gm-90x">
+                                <rect key="frame" x="20" y="458" width="353" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="1Tl-94-Wrs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <menu key="menu" id="3ZI-FA-sSh">
+                                    <children>
+                                        <command title="Item 1" id="WU6-Hi-Vy9"/>
+                                        <command title="Item 2" id="YY7-8V-nZF"/>
+                                    </children>
+                                </menu>
+                                <state key="normal" title="Button"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gwO-23-XoU"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="gwO-23-XoU" firstAttribute="trailing" secondItem="vvn-gA-i1n" secondAttribute="trailing" constant="20" id="2RM-Ln-aQ0"/>
+                            <constraint firstItem="gwO-23-XoU" firstAttribute="trailing" secondItem="kjW-gn-AVz" secondAttribute="trailing" constant="20" id="6vE-C2-9Z4"/>
+                            <constraint firstItem="kjW-gn-AVz" firstAttribute="leading" secondItem="gwO-23-XoU" secondAttribute="leading" constant="20" id="9HE-Ht-t1y"/>
+                            <constraint firstItem="vfI-Gm-90x" firstAttribute="leading" secondItem="gwO-23-XoU" secondAttribute="leading" constant="20" id="BNV-jJ-6HN"/>
+                            <constraint firstItem="gwO-23-XoU" firstAttribute="trailing" secondItem="vfI-Gm-90x" secondAttribute="trailing" constant="20" id="CDG-qu-Aaf"/>
+                            <constraint firstItem="kjW-gn-AVz" firstAttribute="top" secondItem="vvn-gA-i1n" secondAttribute="bottom" constant="50" id="CU2-rr-b1f"/>
+                            <constraint firstItem="vfI-Gm-90x" firstAttribute="top" secondItem="kjW-gn-AVz" secondAttribute="bottom" constant="40" id="INY-jC-lzE"/>
                             <constraint firstItem="MGk-zk-fzX" firstAttribute="leading" secondItem="gwO-23-XoU" secondAttribute="leading" constant="16" id="JKq-hU-EQH"/>
+                            <constraint firstItem="vvn-gA-i1n" firstAttribute="leading" secondItem="gwO-23-XoU" secondAttribute="leading" constant="20" id="Wib-2V-7ge"/>
+                            <constraint firstItem="vvn-gA-i1n" firstAttribute="top" secondItem="gwO-23-XoU" secondAttribute="top" constant="80" id="bba-Gt-h8y"/>
+                            <constraint firstItem="vvn-gA-i1n" firstAttribute="centerX" secondItem="IYV-CV-Q9f" secondAttribute="centerX" id="dIF-ti-4DL"/>
                             <constraint firstItem="MGk-zk-fzX" firstAttribute="top" secondItem="gwO-23-XoU" secondAttribute="top" id="rcQ-MK-bkZ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="allFunctionsCheckBoxButton" destination="hp3-ZH-rqw" id="nK6-X1-pXX"/>
+                        <outlet property="chooseSoundButton" destination="kjW-gn-AVz" id="DaE-cz-3P2"/>
+                        <outlet property="chooseVibrateButton" destination="vfI-Gm-90x" id="Uwb-65-mmE"/>
+                        <outlet property="onlySoundButton" destination="uRJ-65-SRV" id="xcz-ou-Da3"/>
+                        <outlet property="onlyVibrateButton" destination="5Xg-Iy-3cB" id="BFm-1E-FdL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WWJ-cc-xLX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2208" y="608"/>
+            <point key="canvasLocation" x="-2208.3969465648852" y="607.04225352112678"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kaa-49-CVW">
@@ -277,6 +359,7 @@
     <resources>
         <image name="arrowshape.turn.up.backward.fill" catalog="system" width="128" height="104"/>
         <image name="books.vertical" catalog="system" width="128" height="107"/>
+        <image name="checkmark.square" catalog="system" width="128" height="114"/>
         <image name="gear" catalog="system" width="128" height="122"/>
         <image name="sidebar.squares.trailing" catalog="system" width="128" height="93"/>
         <systemColor name="systemOrangeColor">
