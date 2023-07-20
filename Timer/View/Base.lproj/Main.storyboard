@@ -238,7 +238,7 @@
                                     <constraint firstAttribute="height" constant="35" id="xr2-Gw-wKt"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="arrowshape.turn.up.backward.fill" catalog="system"/>
+                                <buttonConfiguration key="configuration" style="plain" image="arrowshape.backward.fill" catalog="system"/>
                                 <connections>
                                     <action selector="back:" destination="L7j-Vu-96C" eventType="touchUpInside" id="DZI-yp-Pzy"/>
                                 </connections>
@@ -337,6 +337,68 @@
             </objects>
             <point key="canvasLocation" x="-2208.3969465648852" y="607.04225352112678"/>
         </scene>
+        <!--Comments Controller-->
+        <scene sceneID="KUE-x8-raO">
+            <objects>
+                <viewController storyboardIdentifier="CommentsController" id="Zpe-Qa-fMm" customClass="CommentsController" customModule="Timer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Txf-tM-fRW">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="foto" translatesAutoresizingMaskIntoConstraints="NO" id="hJq-AD-DPc">
+                                <rect key="frame" x="121.66666666666669" y="138" width="150" height="150"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="RgR-Gy-TYo"/>
+                                    <constraint firstAttribute="width" constant="150" id="hmf-28-Gh6"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6b-XB-N0z">
+                                <rect key="frame" x="20" y="333" width="353" height="440"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" name="Impact" family="Impact" pointSize="23"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYU-rG-1IR">
+                                <rect key="frame" x="10" y="69" width="48" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="2Ze-kK-XNZ"/>
+                                    <constraint firstAttribute="height" constant="33" id="oTU-tB-phH"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <backgroundConfiguration key="background" image="arrowshape.backward.fill" catalog="system"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="back:" destination="Zpe-Qa-fMm" eventType="touchUpInside" id="QcX-wN-n6h"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="aAH-z7-bHc"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hJq-AD-DPc" firstAttribute="centerX" secondItem="Txf-tM-fRW" secondAttribute="centerX" id="30H-iM-Exn"/>
+                            <constraint firstItem="z6b-XB-N0z" firstAttribute="leading" secondItem="aAH-z7-bHc" secondAttribute="leading" constant="20" id="61L-Na-QvN"/>
+                            <constraint firstItem="aAH-z7-bHc" firstAttribute="bottom" secondItem="z6b-XB-N0z" secondAttribute="bottom" constant="45" id="C8t-IL-EOT"/>
+                            <constraint firstItem="z6b-XB-N0z" firstAttribute="top" secondItem="hJq-AD-DPc" secondAttribute="bottom" constant="45" id="YT5-WQ-JEq"/>
+                            <constraint firstItem="aAH-z7-bHc" firstAttribute="trailing" secondItem="z6b-XB-N0z" secondAttribute="trailing" constant="20" id="n94-ma-sTc"/>
+                            <constraint firstItem="hJq-AD-DPc" firstAttribute="top" secondItem="aAH-z7-bHc" secondAttribute="top" constant="79" id="s9s-Si-Ws5"/>
+                            <constraint firstItem="ZYU-rG-1IR" firstAttribute="leading" secondItem="aAH-z7-bHc" secondAttribute="leading" constant="10" id="uC3-4i-1Pa"/>
+                            <constraint firstItem="ZYU-rG-1IR" firstAttribute="top" secondItem="aAH-z7-bHc" secondAttribute="top" constant="10" id="yXC-KC-jdj"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="hJq-AD-DPc" id="uG1-IY-eXC"/>
+                        <outlet property="textView" destination="z6b-XB-N0z" id="MjI-OJ-qvw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a3z-XB-Qi3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1283.206106870229" y="606.33802816901414"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="kaa-49-CVW">
             <objects>
@@ -357,11 +419,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrowshape.turn.up.backward.fill" catalog="system" width="128" height="104"/>
+        <image name="arrowshape.backward.fill" catalog="system" width="128" height="104"/>
         <image name="books.vertical" catalog="system" width="128" height="107"/>
         <image name="checkmark.square" catalog="system" width="128" height="114"/>
+        <image name="foto" width="564" height="565"/>
         <image name="gear" catalog="system" width="128" height="122"/>
         <image name="sidebar.squares.trailing" catalog="system" width="128" height="93"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -39,6 +39,7 @@ class SideMenuController: UIViewController {
 extension SideMenuController {
     
     @objc func showCommentView() {
+        dismiss(animated: true)
         delegate?.pushToCommentView()
     }
     

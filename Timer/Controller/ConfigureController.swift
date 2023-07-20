@@ -92,7 +92,6 @@ class ConfigureController: UIViewController {
                 chooseSoundButton.isEnabled = false
                 chooseVibrateButton.isEnabled = false
             }
-            print(sender.isSelected)
             
         case 1: // Only Vibrate
             sender.isSelected = !sender.isSelected

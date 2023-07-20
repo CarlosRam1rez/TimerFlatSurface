@@ -108,14 +108,10 @@ class TimerController: UIViewController {
                 let motionPitchDegrees = motion.pitch * 180 / .pi
                 switch motionPitchDegrees {
                 case  0.1 ... 2.0:
-                    print("success")
-                    print(motionPitchDegrees)
                     self.startCounters()
                     self.timerRotation.invalidate()
                 default:
-                    print("failure")
-                    print(motionPitchDegrees)
-                }
+                    break                }
             }
         }
     }
@@ -161,8 +157,6 @@ class TimerController: UIViewController {
             }
             
             if self.counterMin == 0 && self.counterSec == 0 && self.counterHour == 0 {
-                //HERE sound and vibrate behaivor
-                print("FINISHED!!!")
                 self.soundAndVibrate()
                 self.resetCounters()
             }
@@ -183,7 +177,6 @@ extension TimerController {
     private func setupMotionUpdates() {
         manager.startDeviceMotionUpdates(to: OperationQueue()) { (data: CMDeviceMotion?, error: Error?) in
             guard let data = data else {
-                print("Error: \(error!)")
                 return
             }
             self.deviceMotionData = data
@@ -227,11 +220,11 @@ extension TimerController {
 // MARK: - SideMenu
 extension TimerController: SideMenuProtocol {
     func pushToCommentView() {
-        print("pushToCommentView")
+        guard let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "CommentsController") as? CommentsController else { return }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func pushToConfigureView() {
-        print("pushToConfigureView")
         guard let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ConfigureController") as? ConfigureController else { return }
         vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
